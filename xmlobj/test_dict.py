@@ -22,3 +22,11 @@ class TestDict(unittest.TestCase):
     def test_getitem(self):
         """Test if an item is correctly retrieved."""
         self.assertEqual(self.obj['name'], 'Galahad')
+
+    def test_len(self):
+        """Test if the length of object is correct."""
+        self.assertEqual(len(self.obj), 3)
+
+    def test_iter(self):
+        """Test if the length of object is correct."""
+        self.assertListEqual(list(self.obj), ['name', 'nickname', 'age'])
