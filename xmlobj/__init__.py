@@ -1,7 +1,8 @@
 """Definition for XmlObj."""
-from collections.abc import Mapping
+from collections.abc import MutableMapping
+from lxml import etree
 
-class XmlObj(Mapping):
+class XmlObj(MutableMapping):
     """A dictionary-like object that stores it's values as XML."""
 
     def __getitem__(self, key):
@@ -9,6 +10,16 @@ class XmlObj(Mapping):
         if txt:
             return txt[0]
         raise KeyError('No such key')
+
+    def __setitem__(self, key, value):
+        if key in self:
+            del self[key]
+        element = etree.SubElement(self._element, key)
+        element.text = value
+
+    def __delitem__(self, key):
+        element = self._element.xpath('{0}'.format(key))[0]
+        self._element.remove(element)
 
     def __iter__(self):
         return (el.tag for el in self._element)

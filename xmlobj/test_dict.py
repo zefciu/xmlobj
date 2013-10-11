@@ -30,3 +30,11 @@ class TestDict(unittest.TestCase):
     def test_iter(self):
         """Test if the length of object is correct."""
         self.assertListEqual(list(self.obj), ['name', 'nickname', 'age'])
+
+    def test_setitem(self):
+        """Test if the setting of an item works correctly."""
+        self.obj['city'] = 'Poznań'
+        self.assertEqual(len(self.obj), 4)
+        self.assertEqual(self.obj['city'], 'Poznań')
+        self.assertListEqual(
+            list(self.obj), ['name', 'nickname', 'age', 'city'])
