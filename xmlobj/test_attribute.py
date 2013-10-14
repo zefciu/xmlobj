@@ -29,3 +29,8 @@ class TestAttribute(unittest.TestCase):
     def test_getattr(self):
         """Test the getattribute behaviour."""
         self.assertEqual(self.obj.type, 'user')
+
+    def test_setattr(self):
+        """Test the setattribute behaviour."""
+        self.obj.source = 'LDAP'
+        self.assertEqual(self.obj.source, 'LDAP')
