@@ -4,6 +4,7 @@ import unittest
 from lxml import etree
 
 from xmlobj import XmlObj
+from xmlobj.attribute import Attribute
 
 INITIAL_DATA = """<person type="user">
     <name>Galahad</name>
@@ -22,11 +23,9 @@ class TestAttribute(unittest.TestCase):
             type = Attribute()
             source = Attribute()
 
-        self.obj = User()
+        self.obj = Person()
         self.obj._element = etree.fromstring(INITIAL_DATA)
 
     def test_getattr(self):
         """Test the getattribute behaviour."""
         self.assertEqual(self.obj.type, 'user')
-
-

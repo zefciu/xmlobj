@@ -1,8 +1,20 @@
 """Definition for XmlObj."""
+import abc
 from collections.abc import MutableMapping
-from lxml import etree
 
-class XmlObj(MutableMapping):
+from lxml import etree
+from xmlobj.attribute import Attribute
+
+class XmlObjMeta(abc.ABCMeta):
+    """Metaclass for XmlObj. Performs binding o attributes."""
+
+    def __init__(cls, clsname, bases, dict_):
+        for k, v in dict_.items():
+            if isinstance(v, Attribute):
+                v.bind(k)
+        super(XmlObjMeta, cls).__init__(clsname, bases, dict_)
+
+class XmlObj(MutableMapping, metaclass=XmlObjMeta):
     """A dictionary-like object that stores it's values as XML."""
 
     def __getitem__(self, key):
