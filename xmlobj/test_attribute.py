@@ -34,3 +34,10 @@ class TestAttribute(unittest.TestCase):
         """Test the setattribute behaviour."""
         self.obj.source = 'LDAP'
         self.assertEqual(self.obj.source, 'LDAP')
+        self.assertIn(b'source="LDAP"', etree.tostring(self.obj._element))
+
+    def test_delattr(self):
+        """Test the delattribute behaviour."""
+        del self.obj.type
+        with self.assertRaises(AttributeError):
+            self.obj.type
