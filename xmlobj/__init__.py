@@ -1,5 +1,6 @@
 """Definition for XmlObj."""
 import abc
+from collections import OrderedDict
 from collections.abc import MutableMapping
 import copy
 
@@ -16,6 +17,9 @@ class XmlObjMeta(abc.ABCMeta):
                 v.bind(k)
                 cls.attributes.append(k)
         super(XmlObjMeta, cls).__init__(clsname, bases, dict_)
+
+    def __prepare__(cls, clsname):
+        return OrderedDict()
 
 class XmlObj(MutableMapping, metaclass=XmlObjMeta):
     """A dictionary-like object that stores it's values as XML."""
