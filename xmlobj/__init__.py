@@ -1,6 +1,7 @@
 """Definition for XmlObj."""
 import abc
 from collections.abc import MutableMapping
+import copy
 
 from lxml import etree
 from xmlobj.attribute import Attribute
@@ -51,3 +52,11 @@ class XmlObj(MutableMapping, metaclass=XmlObjMeta):
 
     def __len__(self):
         return len(self._element)
+
+    def __enter__(self):
+        self._previous = copy.deepcopy(self._element)
+
+    def __exit__(self, exc, exc_info, traceback):
+        if exc is not None:
+            self._element = self._previous
+        self._previous = None
