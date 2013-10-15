@@ -3,6 +3,7 @@
 import unittest
 
 from xmlobj import XmlObj
+from xmlobj.attribute import Attribute
 
 INITIAL_DATA = """<person>
     <name>Galahad</name>
@@ -47,3 +48,24 @@ class TestContext(unittest.TestCase):
                 self.obj['age'] = str(1 / 0)
 
         self.assertEqual(self.obj['name'], 'Galahad')
+
+class TestOrder(unittest.TestCase):
+    """Test the ordering of attributes."""
+
+    def setUp(self):
+        """Create a test class with some attributes."""
+        class Knight(XmlObj):
+            name = Attribute()
+            nickname = Attribute()
+            age = Attribute()
+            wisdom = Attribute()
+            favourite_swallow = Attribute()
+            squire = Attribute()
+        self.Knight = Knight
+
+    def test_order(self):
+        """Test if attributes are ordered."""
+        self.assertListEqual(self.Knight.attributes, [
+            'name', 'nickname', 'age', 'wisdom', 'favourite_swallow', 'squire'
+        ])
+

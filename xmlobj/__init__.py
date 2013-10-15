@@ -10,9 +10,11 @@ class XmlObjMeta(abc.ABCMeta):
     """Metaclass for XmlObj. Performs binding o attributes."""
 
     def __init__(cls, clsname, bases, dict_):
+        cls.attributes = []
         for k, v in dict_.items():
             if isinstance(v, Attribute):
                 v.bind(k)
+                cls.attributes.append(k)
         super(XmlObjMeta, cls).__init__(clsname, bases, dict_)
 
 class XmlObj(MutableMapping, metaclass=XmlObjMeta):
