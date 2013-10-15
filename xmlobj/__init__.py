@@ -17,6 +17,19 @@ class XmlObjMeta(abc.ABCMeta):
 class XmlObj(MutableMapping, metaclass=XmlObjMeta):
     """A dictionary-like object that stores it's values as XML."""
 
+    def __init__(self, tagname, dict_):
+        self._element = etree.Element(tagname)
+        for k, v in dict_.items():
+            self[k] = v
+        super(XmlObj, self).__init__()
+
+    @classmethod
+    def fromstring(cls, s):
+        """Create an xmlobj from a string."""
+        self = cls.__new__(cls)
+        self._element = etree.fromstring(s)
+        return self
+
     def __getitem__(self, key):
         txt = self._element.xpath('{0}/text()'.format(key))
         if txt:

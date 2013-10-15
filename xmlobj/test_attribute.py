@@ -23,8 +23,7 @@ class TestAttribute(unittest.TestCase):
             type = Attribute()
             source = Attribute()
 
-        self.obj = Person()
-        self.obj._element = etree.fromstring(INITIAL_DATA)
+        self.obj = Person.fromstring(INITIAL_DATA)
 
     def test_getattr(self):
         """Test the getattribute behaviour."""

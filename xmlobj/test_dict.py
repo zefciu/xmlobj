@@ -16,8 +16,7 @@ class TestDict(unittest.TestCase):
 
     def setUp(self):
         """Create an object with test data."""
-        self.obj = XmlObj()
-        self.obj._element = etree.fromstring(INITIAL_DATA)
+        self.obj = XmlObj.fromstring(INITIAL_DATA)
 
     def test_getitem(self):
         """Test if an item is correctly retrieved."""
